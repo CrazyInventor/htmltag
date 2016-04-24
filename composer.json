@@ -1,0 +1,13 @@
+{
+    "name": "crazyinventor/htmltag",
+    "description": "HTML Helper",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "David Schneider",
+            "email": "david@crazyinventor.net"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
