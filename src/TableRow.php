@@ -3,8 +3,17 @@
 namespace CrazyInventor\HtmlTag;
 
 class TableRow extends HtmlTag {
-
+	/**
+	 * Table row tag
+	 *
+	 * @var string
+	 */
 	protected $tag = 'tr';
+	/**
+	 * Table cells
+	 *
+	 * @var array
+	 */
 	protected $cells = [];
 
 	/**
@@ -15,14 +24,30 @@ class TableRow extends HtmlTag {
 		return $this->cells[$id];
 	}
 
+	/**
+	 * Add a new table cell
+	 *
+	 * @param $cell
+	 */
 	public function addCell($cell) {
 		$this->cells[] = $cell;
 	}
 
+	/**
+	 * Get the keys to access the cells
+	 *
+	 * @return array
+	 */
 	public function getKeys() {
 		return array_keys($this->cells);
 	}
 
+	/**
+	 * TableRow constructor.
+	 *
+	 * @param $row_data
+	 * @param bool $header
+	 */
 	public function __construct($row_data, $header=false) {
 		$class = ($header) ? 'TableHeaderCell' : 'TableCell';
 		$classpath =  __NAMESPACE__ . '\\' . $class;
@@ -31,6 +56,11 @@ class TableRow extends HtmlTag {
 		}
 	}
 
+	/**
+	 * Render table row
+	 * 
+	 * @return string
+	 */
 	public function renderTag() {
 		$rendered_rows = [];
 		foreach ($this->cells as $cell) {
