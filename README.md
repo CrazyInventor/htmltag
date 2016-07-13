@@ -1,0 +1,3 @@
+# htmltag
+
+A little library to create and edit HTML via PHP. Right now it can only do tables. More might come ...
