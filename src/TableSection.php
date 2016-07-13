@@ -1,13 +1,17 @@
 <?php
 
-namespace App\HtmlTag;
+namespace CrazyInventor\HtmlTag;
 
 class TableSection extends HtmlTag {
 
 	protected $rows = [];
 
-	public function getRow($id) {
+	public function row($id) {
 		return $this->rows[$id];
+	}
+
+	public function addRow(TableRow $row) {
+		$this->rows[] = $row;
 	}
 
 	public function getKeys() {

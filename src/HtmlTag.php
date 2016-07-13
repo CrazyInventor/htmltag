@@ -1,13 +1,13 @@
 <?php
 
-namespace App\HtmlTag;
+namespace CrazyInventor\HtmlTag;
 
 abstract class HtmlTag implements HtmlTagInterface {
 
 	protected $tag = 'html';
 	protected $attributes = [
-		'class' => '',
-		'id' => ''
+		'id' => null,
+		'class' => [],
 	];
 
 	public function __construct($tag)
@@ -17,30 +17,49 @@ abstract class HtmlTag implements HtmlTagInterface {
 
 	public function addClass($class) {
 		if(!in_array($class,$this->attributes['class'])) {
-			$this->attributes['class'][]=$class;
+			$this->attributes['class'][]=(string)$class;
 		}
 	}
 
 	public function setId($id) {
-		$this->attributes['id']=$id;
+		$this->attributes['id']=(string)$id;
 	}
 
 	protected function renderOpeningTag() {
 		$attributes = [];
 		foreach($this->attributes as $attribute => $value) {
-			$attribute_string = $attribute
-				. '="';
+			$attribute_string = '';
 			switch(gettype($value)) {
-
+				case "NULL":
+					break;
+				case "string":
+					$attribute_string = $attribute
+						. '="'
+						. $value
+						. '"';
+					break;
+				case "array":
+					if(count($value)>0) {
+						$attribute_string = $attribute . '="';
+						$attribute_string .= implode(" ", $value);
+						$attribute_string .= '"';
+					}
+					break;
+				default:
+					throw new \InvalidArgumentException('Unknown variable type: ' . gettype($value));
+					break;
 			}
-			$attribute_string .= '"';
-			$attributes[] = $attribute_string;
+			if(strlen($attribute_string)>0) {
+				$attributes[] = $attribute_string;
+			}
 		}
-
+		$attributes_string = '';
+		if(count($attributes)>0) {
+			$attributes_string = ' ' . implode(" ", $attributes);
+		}
 		return '<'
 		. $this->tag
-		. ' '
-		. implode(" ", $attributes)
+		. $attributes_string
 		. '>';
 
 	}
@@ -49,5 +68,10 @@ abstract class HtmlTag implements HtmlTagInterface {
 		return '</'
 		. $this->tag
 		. '>';
+	}
+
+	public function __toString()
+	{
+		return $this->renderTag();
 	}
 }

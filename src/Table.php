@@ -1,39 +1,59 @@
 <?php
 
-namespace App\HtmlTag;
+namespace CrazyInventor\HtmlTag;
 
 class Table extends HtmlTag {
 
 	protected $tag = 'table';
 	protected $sections = [
-		'thead' => [],
-		'tfoot' => [],
-		'tbody' => [],
+		'thead' => null,
+		'tfoot' => null,
+		'tbody' => null,
 	];
 
 	public function __construct($body_data = [], $thead_data = [], $tfoot_data = [])
 	{
-		$this->sections['thead'] = new TableSection('thead', $thead_data, true);
-		$this->sections['tfoot'] = new TableSection('tfoot', $tfoot_data);
-		$this->sections['tbody'] = new TableSection('tbody', $body_data);
+		if(count($thead_data)>0) {
+			$this->sections['thead'] = new TableSection('thead', $thead_data, true);
+		}
+		if(count($tfoot_data)>0) {
+			$this->sections['tfoot'] = new TableSection('tfoot', $tfoot_data, true);
+		}
+		if(count($body_data)>0) {
+			$this->sections['tbody'] = new TableSection('tbody', $body_data);
+		}
 	}
 
-	public function getBody() {
+	public function body() {
 		return $this->sections['tbody'];
 	}
 
-	public function getFoot() {
+	public function setBody(TableSection $body) {
+		$this->sections['tbody'] = $body;
+	}
+
+	public function foot() {
 		return $this->sections['tfoot'];
 	}
 
-	public function getHead() {
+	public function setFoot(TableSection $foot) {
+		$this->sections['tfoot'] = $foot;
+	}
+
+	public function head() {
 		return $this->sections['thead'];
+	}
+
+	public function setHead(TableSection $head) {
+		$this->sections['thead'] = $head;
 	}
 
 	public function renderTag() {
 		$sections = [];
 		foreach($this->sections as $section) {
-			$sections[] = $section->renderTag();
+			if($section!=null) {
+				$sections[] = $section->renderTag();
+			}
 		}
 		$sections_html = implode("\n", $sections);
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\HtmlTag;
+namespace CrazyInventor\HtmlTag;
 
 class TableHeaderCell extends TableCell {
 	protected $tag = 'th';

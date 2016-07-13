@@ -1,6 +1,6 @@
 <?php
 
-namespace App\HtmlTag;
+namespace CrazyInventor\HtmlTag;
 
 use App\HtmlTag\TableCell;
 
@@ -9,8 +9,12 @@ class TableRow extends HtmlTag {
 	protected $tag = 'tr';
 	protected $cells = [];
 
-	public function getCell($id) {
+	public function cell($id) {
 		return $this->cells[$id];
+	}
+
+	public function addCell($cell) {
+		$this->cells[] = $cell;
 	}
 
 	public function getKeys() {
@@ -18,7 +22,7 @@ class TableRow extends HtmlTag {
 	}
 
 	public function __construct($row_data, $header=false) {
-		$class = ($header) ? 'App\HtmlTag\TableHeaderCell' : 'App\HtmlTag\TableCell';
+		$class = ($header) ? 'CrazyInventor\HtmlTag\TableHeaderCell' : 'CrazyInventor\HtmlTag\TableCell';
 		foreach($row_data as $cell) {
 			$this->cells[] = new $class($cell);
 		}
@@ -30,7 +34,7 @@ class TableRow extends HtmlTag {
 			$rendered_cells[] = $cell->renderTag();
 		}
 		return $this->renderOpeningTag()
-		. implode("\n", $rendered_cells)
+		. implode("", $rendered_cells)
 		. $this->renderClosingTag();
 	}
 }

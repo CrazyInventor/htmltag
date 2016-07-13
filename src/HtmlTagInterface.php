@@ -1,6 +1,6 @@
 <?php
 
-namespace App\HtmlTag;
+namespace CrazyInventor\HtmlTag;
 
 interface HtmlTagInterface {
 	public function renderTag();
