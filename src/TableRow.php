@@ -2,13 +2,15 @@
 
 namespace CrazyInventor\HtmlTag;
 
-use App\HtmlTag\TableCell;
-
 class TableRow extends HtmlTag {
 
 	protected $tag = 'tr';
 	protected $cells = [];
 
+	/**
+	 * @param $id
+	 * @return TableCell
+	 */
 	public function cell($id) {
 		return $this->cells[$id];
 	}
@@ -22,9 +24,10 @@ class TableRow extends HtmlTag {
 	}
 
 	public function __construct($row_data, $header=false) {
-		$class = ($header) ? 'CrazyInventor\HtmlTag\TableHeaderCell' : 'CrazyInventor\HtmlTag\TableCell';
+		$class = ($header) ? 'TableHeaderCell' : 'TableCell';
+		$classpath =  __NAMESPACE__ . '\\' . $class;
 		foreach($row_data as $cell) {
-			$this->cells[] = new $class($cell);
+			$this->cells[] = new $classpath($cell);
 		}
 	}
 

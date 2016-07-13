@@ -13,17 +13,14 @@ class Table extends HtmlTag {
 
 	public function __construct($body_data = [], $thead_data = [], $tfoot_data = [])
 	{
-		if(count($thead_data)>0) {
-			$this->sections['thead'] = new TableSection('thead', $thead_data, true);
-		}
-		if(count($tfoot_data)>0) {
-			$this->sections['tfoot'] = new TableSection('tfoot', $tfoot_data, true);
-		}
-		if(count($body_data)>0) {
-			$this->sections['tbody'] = new TableSection('tbody', $body_data);
-		}
+		$this->sections['thead'] = new TableSection('thead', $thead_data, true);
+		$this->sections['tfoot'] = new TableSection('tfoot', $tfoot_data, true);
+		$this->sections['tbody'] = new TableSection('tbody', $body_data);
 	}
 
+	/**
+	 * @return TableSection
+	 */
 	public function body() {
 		return $this->sections['tbody'];
 	}
@@ -32,6 +29,9 @@ class Table extends HtmlTag {
 		$this->sections['tbody'] = $body;
 	}
 
+	/**
+	 * @return TableSection
+	 */
 	public function foot() {
 		return $this->sections['tfoot'];
 	}
@@ -40,6 +40,9 @@ class Table extends HtmlTag {
 		$this->sections['tfoot'] = $foot;
 	}
 
+	/**
+	 * @return TableSection
+	 */
 	public function head() {
 		return $this->sections['thead'];
 	}
@@ -51,11 +54,9 @@ class Table extends HtmlTag {
 	public function renderTag() {
 		$sections = [];
 		foreach($this->sections as $section) {
-			if($section!=null) {
-				$sections[] = $section->renderTag();
-			}
+			$sections[] = $section->renderTag();
 		}
-		$sections_html = implode("\n", $sections);
+		$sections_html = implode($sections);
 
 		return $this->renderOpeningTag()
 		. $sections_html

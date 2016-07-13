@@ -21,8 +21,8 @@ abstract class HtmlTag implements HtmlTagInterface {
 		}
 	}
 
-	public function setId($id) {
-		$this->attributes['id']=(string)$id;
+	public function addAttribute($name, $value = '') {
+		$this->attributes[$name] = $value;
 	}
 
 	protected function renderOpeningTag() {
@@ -61,13 +61,16 @@ abstract class HtmlTag implements HtmlTagInterface {
 		. $this->tag
 		. $attributes_string
 		. '>';
-
 	}
 
 	protected function renderClosingTag() {
 		return '</'
 		. $this->tag
 		. '>';
+	}
+
+	public function setId($id) {
+		$this->attributes['id']=(string)$id;
 	}
 
 	public function __toString()

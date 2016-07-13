@@ -5,7 +5,12 @@ namespace CrazyInventor\HtmlTag;
 class TableSection extends HtmlTag {
 
 	protected $rows = [];
+	protected $header = [];
 
+	/**
+	 * @param $id
+	 * @return TableRow
+	 */
 	public function row($id) {
 		return $this->rows[$id];
 	}
@@ -21,6 +26,7 @@ class TableSection extends HtmlTag {
 	public function __construct($tag, $rows, $header=false)
 	{
 		parent::__construct($tag);
+		$this->header=$header;
 		foreach($rows as $row) {
 			$this->rows[] = new TableRow($row, $header);
 		}
@@ -31,8 +37,12 @@ class TableSection extends HtmlTag {
 		foreach ($this->rows as $row) {
 			$rendered_rows[] = $row->renderTag();
 		}
-		return $this->renderOpeningTag()
-		. implode("\n", $rendered_rows)
-		. $this->renderClosingTag();
+		if(count($rendered_rows)>0) {
+			return $this->renderOpeningTag()
+			. implode("", $rendered_rows)
+			. $this->renderClosingTag();
+		} else {
+			return '';
+		}
 	}
 }

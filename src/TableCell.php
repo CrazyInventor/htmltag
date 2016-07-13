@@ -18,4 +18,8 @@ class TableCell extends HtmlTag {
 		. $this->content
 		. $this->renderClosingTag();
 	}
+
+	public function setContent($new_content) {
+		$this->content = $new_content;
+	}
 }
