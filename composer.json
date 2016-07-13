@@ -8,6 +8,11 @@
             "email": "david@crazyinventor.net"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "CrazyInventor\\HtmlTag\\": "src/"
+        }
+    },
     "minimum-stability": "stable",
     "require": {}
 }
